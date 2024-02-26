@@ -1,24 +1,54 @@
 # ValidatesIdentity::GtDpi
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/validates_identity/gt_dpi`. To experiment with that code, run `bin/console` for an interactive prompt.
+This projects aims to validate Guatemala [Documento Personal de Identificación](https://es.wikipedia.org/wiki/Documento_Personal_de_Identificaci%C3%B3n) identification document.
+This project depends on `validates_identity` gem and is a plugin for it.
+This project is based on documentations found [here](https://learn.sayari.com/interpreting-guatemalan-national-id-numbers/) and [here](https://www.mineduc.gob.gt/DIGEESP/documents/adecuacionesCurriculares/Documentos%20de%20Apoyo/C%C3%B3digos%20Departamentos-Municipios-Idiomas.pdf)
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
+```ruby
+gem 'validates_identity-gt_dpi'
+```
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+And then execute:
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+    $ bundle install
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+Or install it yourself as:
+
+    $ gem install validates_identity-gt_dpi
 
 ## Usage
 
-TODO: Write usage instructions here
+Just use as any other validator:
+
+```ruby
+class User < ActiveRecord::Base
+  # :identity_type is the attribute that will be used to determine the identity type and is required
+  validates :identity, identity: { identity_type: :identity_type }
+end
+```
+
+## Advanced Usage
+
+New Identity Validators can be registered through the public apis of `ValidatesIdentity`
+
+```ruby
+ValidatesIdentity.register_identity_type('CustomIdentity', CustomIdentityValidator)
+```
+
+Each Validator should have:
+
+- a constructor with 2 params: `value` and `options` as a hash
+- a `valid?` method that returns a boolean
+
+In case of a legacy system where keys were already defined and differ from the official ones, aliases can be registered as well
+
+```ruby
+ValidatesIdentity.register_identity_type_alias('LegacyIdentity', 'CustomIdentity')
+```
 
 ## Development
 
@@ -28,7 +58,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/validates_identity-gt_dpi. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/validates_identity-gt_dpi/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/plribeiro3000/validates_identity-gt_dpi. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/plribeiro3000/validates_identity-gt_dpi/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -36,4 +66,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the ValidatesIdentity::GtDpi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/validates_identity-gt_dpi/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the ValidatesIdentity::GtDpi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/plribeiro3000/validates_identity-gt_dpi/blob/master/CODE_OF_CONDUCT.md).
