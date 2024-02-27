@@ -9,6 +9,6 @@ class ValidatesIdentity
   end
 end
 
-ValidatesIdentity.register_identity_type('GT_DPI', ValidatesIdentity::GtDpi::Validator)
-ValidatesIdentity::ShouldaMatchers.register_allowed_values('GT_DPI', %w[1234567891507 2345678990102])
-ValidatesIdentity::ShouldaMatchers.register_disallowed_values('GT_DPI', %w[1234567881507 1234567892307 1234567891618])
+ValidatesIdentity.register_person_identity_type('GT_DPI', ValidatesIdentity::GtDpi::Validator)
+ValidatesIdentity::ShouldaMatchers.register_person_allowed_values('GT_DPI', %w[1234567891507 2345678990102])
+ValidatesIdentity::ShouldaMatchers.register_person_disallowed_values('GT_DPI', %w[1234567881507 1234567892307 1234567891618])
